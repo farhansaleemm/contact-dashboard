@@ -1,1 +1,21 @@
-/* You can add global styles to this file, and also import other style files */
+//@import "~bootstrap/scss/bootstrap";
+
+.main-container {
+  display: flex;
+  height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9fb;
+}
+
+.sidebar {
+  width: 320px;
+  border-right: 1px solid #e0e0e0;
+  overflow-y: auto;
+  background-color: #fff;
+}
+
+.content {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}

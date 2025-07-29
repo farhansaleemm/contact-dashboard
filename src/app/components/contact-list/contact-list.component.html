@@ -1,0 +1,101 @@
+<div class="row" style="height: 100vh; margin: 0;">
+ <!-- left div -->
+  <div 
+    class="col-md-5 left" 
+    [class.d-none]="isMobileView && showDetailsOnly"
+  >
+    <!-- Header -->
+    <div class="contacts-header">
+      <div class="header-content">
+        <button class="btn-menu">
+          <i class="fa fa-bars"></i>
+        </button>
+        <h2 class="header-title">Contacts</h2>
+        <div class="header-actions">
+          <button class="btn-nav">
+            <i class="fa fa-chevron-left"></i>
+          </button>
+          <button class="btn-nav">
+            <i class="fa fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="search-section">
+      <div class="search-container">
+        <input
+          type="text"
+          class="search-input"
+          [(ngModel)]="searchTerm"
+          placeholder="Name, or phone number"
+        />
+        <button class="search-button">
+          <i class="fa fa-search"></i>
+        </button>
+      </div>
+    </div>
+
+
+    <div class="contacts-list">
+      <div
+        *ngFor="let contact of filteredContacts"
+        class="contact-item"
+        (click)="selectContact(contact)"
+        [class.active]="selectedContact?.id === contact.id"
+      >
+        <div class="contact-avatar-container">
+          <img
+            [src]="contact.avatar || '/assets/Unknown_person.jpg'"
+            class="contact-avatar"
+            width="40"
+            height="40"
+          />
+          <div 
+            class="status-indicator"
+            [class.online]="contact.status === 'online'"
+            [class.offline]="contact.status === 'offline'"
+            [class.away]="contact.status === 'away'"
+          ></div>
+        </div>
+        
+        <div class="contact-details">
+          <div class="contact-name">{{ contact.firstName }} {{ contact.lastName }}</div>
+          <div class="contact-role">{{ contact.designation || 'No designation' }}</div>
+        </div>
+
+        <div class="contact-actions">
+          <button class="action-btn message-btn">
+            <i class="fa fa-comment"></i>
+          </button>
+          <button class="action-btn call-btn" >
+            <i class="fa fa-phone"></i>
+          </button>
+          <button class="action-btn more-btn" >
+            <i class="fa fa-ellipsis-h"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- right div -->
+  <div 
+    class="col-md-7 right" 
+    [class.d-none]="isMobileView && !showDetailsOnly"
+  >
+
+    <button 
+      *ngIf="isMobileView" 
+      class="btn btn-link" 
+      (click)="goBack()" 
+      style="margin: 10px 0 0 10px;"
+    >
+      ← Back
+    </button>
+
+    <app-contact-details [contact]="contact" [emails]="emails"></app-contact-details>
+  </div>
+</div>

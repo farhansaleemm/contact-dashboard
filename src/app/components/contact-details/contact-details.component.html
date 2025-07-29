@@ -1,0 +1,93 @@
+<div *ngIf="contact" class="contact-detail-card">
+
+  <div class="contact-header">
+    <img [src]="contact.avatar || '/assets/Unknown_person.jpg'" 
+         class="contact-avatar" 
+         width="80" 
+         height="80" />
+    <div class="contact-info">
+      <h3 class="contact-name">{{ contact.firstName }} {{ contact.lastName }}</h3>
+      <p class="contact-designation">{{ contact.designation || 'UI/UX Designer' }}</p>
+      
+    
+      <div class="action-buttons">
+        <button class="btn btn-primary btn-message">
+          <i class="fa fa-comment"></i> Message
+        </button>
+        <button class="btn btn-outline-secondary btn-call">
+          <i class="fa fa-phone"></i>
+        </button>
+   
+        <button class="btn btn-outline-secondary btn-more">
+          <i class="fa fa-ellipsis-h"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="contact-details">
+    <!-- Bio Section -->
+    <div class="detail-row">
+      <label class="detail-label">Bio</label>
+      <div class="detail-value">
+        {{ contact.bio || 'When I first got into the advertising, I was looking for the magical combination that would put website into the top search engine rankings' }}
+      </div>
+    </div>
+
+
+    <div class="detail-row">
+      <label class="detail-label">Email</label>
+      <div class="detail-value">
+        <div *ngFor="let email of emails || []; let i = index" class="email-item">
+          <span class="email-address">{{ email }}</span>
+          <span *ngIf="i === 0" class="badge badge-primary">Primary</span>
+        </div>
+      </div>
+    </div>
+
+  
+    <div class="detail-row">
+      <label class="detail-label">Dial</label>
+      <div class="detail-value">
+        <div class="dial-item">
+          {{ contact.dial || 'j.stevens@ymsg.com' }}
+        </div>
+      </div>
+    </div>
+
+ 
+    <div class="detail-row">
+      <label class="detail-label">Meeting</label>
+      <div class="detail-value">
+        <div class="meeting-link">
+          {{ contact.meetingLink || 'http://go.betacall.com/meet/j.stevens' }}
+        </div>
+      </div>
+    </div>
+
+   
+    <div class="detail-row">
+      <label class="detail-label">Phone</label>
+      <div class="detail-value">
+        <div *ngFor="let phone of contact.phone || []; let i = index" class="phone-item">
+          <span class="phone-number">{{ phone }}</span>
+          <span *ngIf="i === 0" class="badge badge-primary">Primary</span>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="detail-row">
+      <label class="detail-label">Social</label>
+      <div class="detail-value">
+        <div class="social-links">
+          <a href="#" class="social-link facebook"><i class="fa fa-facebook-f"></i></a>
+          <a href="#" class="social-link pinterest"><i class="fa fa-pinterest"></i></a>
+          <a href="#" class="social-link twitter"><i class="fa fa-twitter"></i></a>
+          <a href="#" class="social-link google"><i class="fa fa-google"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
