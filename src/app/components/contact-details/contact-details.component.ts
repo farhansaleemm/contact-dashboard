@@ -1,8 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ContactService } from '../../services/contact.service';
 import { Contact } from '../../models/contact.model';
-import { EmailAddress } from '../../models/email.model';
 
 @Component({
   selector: 'app-contact-details',
@@ -10,16 +8,16 @@ import { EmailAddress } from '../../models/email.model';
   styleUrls: ['./contact-details.component.scss']
 })
 export class ContactDetailsComponent implements OnInit, OnChanges {
-  @Input("emails") emails : EmailAddress[];
+  @Input("emails") emails : any;
   @Input("contact") contact : Contact;
 
-  constructor(private route: ActivatedRoute, private contactService: ContactService) {}
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['emails'] && changes['emails'].currentValue) {
-    }
-
-    if (changes['contact'] && changes['contact'].currentValue) {
-    }
+  constructor() {}
+  ngOnChanges(changes: SimpleChanges): void {
+    /**
+     * Assumption:
+     * No API refetch required on contact input changes
+     * All data flows via inputs from parent component.
+     */
   }
 
   ngOnInit(): void {

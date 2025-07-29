@@ -12,65 +12,76 @@ import { EmailAddress } from 'src/app/models/email.model';
 export class ContactListComponent implements OnInit {
   contacts: Contact[] = [];
   searchTerm = '';
-  emails: EmailAddress[];
-  contact: Contact ;
+  emails: EmailAddress;
+  contact: Contact;
   isMobileView: boolean = false;
   showDetailsOnly: boolean = false;
 
   constructor(private contactService: ContactService, private router: Router) {}
 
   ngOnInit(): void {
+    // Fetch contact list on init
     this.contactService.getContacts().subscribe(data => {
       this.contacts = data;
-      this.getEmailAddresess(this.contacts[0]?.id)
-    });
-    this.checkViewport();
 
-    window.addEventListener('resize', () => {
-      this.checkViewport();
+      // Assumption: Display first contact by default
+      this.getEmailAddresses(this.contacts[0]?.id);
+      this.contact = this.contacts[0];
     });
+
+    this.checkViewport();
+    window.addEventListener('resize', () => this.checkViewport());
   }
 
   checkViewport() {
-    this.isMobileView = window.innerWidth < 768; 
+    this.isMobileView = window.innerWidth < 768;
+
+    // Reset flag to show both panels on desktop
     if (!this.isMobileView) {
-      this.showDetailsOnly = false; 
+      this.showDetailsOnly = false;
     }
   }
+
   goBack() {
     this.showDetailsOnly = false;
   }
 
-  getEmailAddresess(id: string){
-        if (id) {
+  getEmailAddresses(id: string) {
+    if (id) {
       this.contactService.getEmailAddresses(id).subscribe(emailData => {
-        console.log("emails: ",emailData);
-        console.log("id: ",id);
-        this.emails = emailData.find(c => c.contactId === id).email;
-        console.log("this.emails: ",this.emails);
+        /**
+         * Assumption:
+         * The /email_addresses endpoint returns an array of objects like:
+         * [{ contactId: string, email: EmailAddress[] }]
+         * In production: This structure should be normalized and validated.
+         */
+        this.emails = emailData.find(c => c.contactId === id)?.email || [];
+      }, error => {
+        // Skipped full error handling for simplicity
+        // TODO: Handle error states (e.g., show toast or log)
+        console.error('Email fetch error:', error);
       });
     }
   }
 
-  selectContact(contact: Contact){
+  selectContact(contact: Contact) {
     this.contact = contact;
-    this.getEmailAddresess(contact.id);
+    this.getEmailAddresses(contact.id);
     if (this.isMobileView) {
       this.showDetailsOnly = true;
     }
   }
 
-  get filteredContacts() {
-    if (!this.searchTerm) {
-      return this.contacts;
-    }
-    
+  get filteredContacts(): Contact[] {
+    if (!this.searchTerm) return this.contacts;
+
     const term = this.searchTerm.toLowerCase();
-    return this.contacts.filter(contact => 
+
+    // Assumption: Only first name, last name, and phone searchable
+    return this.contacts.filter(contact =>
       contact.firstName?.toLowerCase().includes(term) ||
       contact.lastName?.toLowerCase().includes(term) ||
-      contact.phone?.some((phone: string) => phone.includes(term))
+      contact.phone?.some(phone => phone.includes(term))
     );
   }
-
 }
