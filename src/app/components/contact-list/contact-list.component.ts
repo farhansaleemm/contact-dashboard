@@ -20,11 +20,19 @@ export class ContactListComponent implements OnInit {
   constructor(private contactService: ContactService, private router: Router) {}
 
   ngOnInit(): void {
-    // Fetch contact list on init
     this.contactService.getContacts().subscribe(data => {
+      if (data[0]) {
+        data[0].avatar = '/assets/farhan.png';
+      }
+  
+      // if (data[1]) {
+      //   data[1].avatar = '/assets/johana.png';
+      // }
+  
+      if (data[3]) {
+        data[3].avatar = '/assets/johana.png';
+      }
       this.contacts = data;
-
-      // Assumption: Display first contact by default
       this.getEmailAddresses(this.contacts[0]?.id);
       this.contact = this.contacts[0];
     });
@@ -33,10 +41,13 @@ export class ContactListComponent implements OnInit {
     window.addEventListener('resize', () => this.checkViewport());
   }
 
+  get selectedContact(): Contact {
+    return this.contact;
+  }
+
   checkViewport() {
     this.isMobileView = window.innerWidth < 768;
 
-    // Reset flag to show both panels on desktop
     if (!this.isMobileView) {
       this.showDetailsOnly = false;
     }
@@ -49,16 +60,8 @@ export class ContactListComponent implements OnInit {
   getEmailAddresses(id: string) {
     if (id) {
       this.contactService.getEmailAddresses(id).subscribe(emailData => {
-        /**
-         * Assumption:
-         * The /email_addresses endpoint returns an array of objects like:
-         * [{ contactId: string, email: EmailAddress[] }]
-         * In production: This structure should be normalized and validated.
-         */
         this.emails = emailData.find(c => c.contactId === id)?.email || [];
       }, error => {
-        // Skipped full error handling for simplicity
-        // TODO: Handle error states (e.g., show toast or log)
         console.error('Email fetch error:', error);
       });
     }
@@ -73,15 +76,17 @@ export class ContactListComponent implements OnInit {
   }
 
   get filteredContacts(): Contact[] {
-    if (!this.searchTerm) return this.contacts;
+    if (!this.searchTerm.trim()) return this.contacts;
 
-    const term = this.searchTerm.toLowerCase();
+    const term = this.searchTerm.trim().toLowerCase();
 
-    // Assumption: Only first name, last name, and phone searchable
-    return this.contacts.filter(contact =>
-      contact.firstName?.toLowerCase().includes(term) ||
-      contact.lastName?.toLowerCase().includes(term) ||
-      contact.phone?.some(phone => phone.includes(term))
-    );
+    return this.contacts.filter(contact => {
+      const nameHit =
+        contact.firstName?.toLowerCase().includes(term) ||
+        contact.lastName?.toLowerCase().includes(term);
+      const phoneHit = contact.phone?.some(phone => phone.replace(/\s/g, '').includes(term));
+      const emailHit = contact.email?.some(email => email.toLowerCase().includes(term));
+      return nameHit || phoneHit || emailHit;
+    });
   }
 }
