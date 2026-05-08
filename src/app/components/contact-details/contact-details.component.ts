@@ -1,5 +1,4 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Contact } from '../../models/contact.model';
 
 @Component({
@@ -8,18 +7,31 @@ import { Contact } from '../../models/contact.model';
   styleUrls: ['./contact-details.component.scss']
 })
 export class ContactDetailsComponent implements OnInit, OnChanges {
-  @Input("emails") emails : any;
-  @Input("contact") contact : Contact;
+  @Input() emails: string[];
+  @Input() contact: Contact;
+
+  meetingUrl = '#';
 
   constructor() {}
+
   ngOnChanges(changes: SimpleChanges): void {
-    /**
-     * Assumption:
-     * No API refetch required on contact input changes
-     * All data flows via inputs from parent component.
-     */
+    if (changes.contact || changes.emails) {
+      this.meetingUrl = this.resolveMeetingUrl(
+        this.contact && (this.contact as any).meetingLink
+      );
+    }
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  private resolveMeetingUrl(link?: string): string {
+    const raw = (link || 'http://go.betacall.com/meet/j.stevens').trim();
+    if (!raw) {
+      return '#';
+    }
+    if (/^https?:\/\//i.test(raw)) {
+      return raw;
+    }
+    return `https://${raw}`;
   }
 }

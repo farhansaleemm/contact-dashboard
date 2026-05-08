@@ -1,206 +1,283 @@
-.contact-detail-card {
-    background: white;
-    border-radius: 12px;
-    padding: 40px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  //  max-width: 400px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    height: 100%;
-    overflow-y: auto; 
+$font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$purple: #6c5ce7;
+$purple-hover: #5b4ad1;
+$purple-tag-bg: rgba(108, 92, 231, 0.12);
+$text: #1A1C1D;
+$text-muted: #8083A3;
+$border: #e4e7eb;
+
+:host {
+  display: block;
+  height: 100%;
+  // font-family: $font;
+  color: $text;
+  -webkit-font-smoothing: antialiased;
+}
+
+.detail-root {
+  box-sizing: border-box;
+  max-width: 639px;
+  padding: 36px 40px 48px;
+  margin: 0 auto;
+  background: white;
+  min-height: 100%;
+}
+
+.detail-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 36px;
+}
+
+.detail-avatar {
+  flex-shrink: 0;
+  width: 114px;
+  height:114px;
+  border-radius: 26%;
+  object-fit: cover;
+}
+
+.detail-header-copy {
+  flex: 1;
+  min-width: 0;
+  padding-top: 4px;
+}
+
+.detail-name {
+  margin: 0 0 6px;
+  font-size: 20px;
+   font-weight: bold;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  color: $text;
+}
+
+.detail-role {
+  margin: 0 0 20px;
+  font-size: 14px;
+  // font-weight: 400;
+  color: $text-muted;
+}
+
+.detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-primary-lg {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 42px;
+  width: 122px;
+  padding: 0 22px;
+  border: none;
+  border-radius: 10px;
+  background: $purple;
+  color: #fff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+
+  i {
+    font-size: 16px;
+    font-weight: 400;
   }
-  
-  .contact-header {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 32px;
-    gap: 16px;
+
+  &:hover {
+    background: $purple-hover;
   }
-  
-  .contact-avatar {
-    border-radius: 50%;
-    object-fit: cover;
+
+  &:active {
+    transform: scale(0.98);
   }
-  
-  .contact-info {
-    flex: 1;
+
+  &:focus-visible {
+    outline: 2px solid $purple;
+    outline-offset: 3px;
   }
-  
-  .contact-name {
-    font-size: 20px;
-    font-weight: 600;
-    margin: 0 0 4px 0;
-    color: #333;
+}
+
+.btn-icon-sq {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid $border;
+  border-radius: 10px;
+  background: #fff;
+  color: #6f767d;
+  font-size: 16px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+
+  &:hover {
+    border-color: #cfd4da;
+    color: $text;
+    background: #fafbfc;
   }
-  
-  .contact-designation {
-    font-size: 14px;
-    color: #666;
-    margin: 0 0 16px 0;
+
+  &:focus-visible {
+    outline: 2px solid $purple;
+    outline-offset: 2px;
   }
-  
-  .action-buttons {
-    display: flex;
-    gap: 8px;
+}
+
+.detail-grid {
+  margin: 0;
+}
+
+.detail-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 28px;
+  padding: 18px 0;
+  border-bottom: 1px solid #f0f2f4;
+
+  &:first-of-type {
+    padding-top: 0;
   }
-  
-  .btn {
-    border: none;
-    border-radius: 6px;
-    padding: 8px 16px;
-    font-size: 14px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    transition: all 0.2s ease;
+
+  &:last-of-type {
+    border-bottom: none;
+    padding-bottom: 0;
   }
-  
-  .btn-message {
-    background: #6c5ce7;
-    color: white;
-  }
-  
-  .btn-message:hover {
-    background: #5a4fcf;
-  }
-  
-  .btn-outline-secondary {
-    background: transparent;
-    border: 1px solid #ddd;
-    color: #666;
-    padding: 8px 12px;
-  }
-  
-  .btn-outline-secondary:hover {
-    background: #f8f9fa;
-  }
-  
-  .contact-details {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .detail-row {
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
-  }
-  
-  .detail-label {
-    font-size: 14px;
-    color: #999;
-    min-width: 60px;
-    margin: 0;
-    font-weight: normal;
-    text-align: left;
-  }
-  
-  .detail-value {
-    flex: 1;
-    font-size: 14px;
-    color: #333;
-    line-height: 1.5;
-  }
-  
-  .email-item,
-  .phone-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 4px;
-  }
-  
-  .email-item:last-child,
-  .phone-item:last-child {
+}
+
+.detail-label {
+  flex: 0 0 88px;
+  margin: 0;
+  padding-top: 2px;
+  font-size: 14px;
+   font-weight: normal;
+  color: $text-muted;
+  line-height: 1.45;
+}
+
+.detail-value {
+  flex: 1;
+  margin: 0;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: $text;
+}
+
+.detail-value--multiline {
+  max-width: 52ch;
+}
+
+.value-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+
+  &:last-child {
     margin-bottom: 0;
   }
-  
-  .badge {
-    font-size: 11px;
-    padding: 2px 8px;
-    border-radius: 12px;
-    font-weight: 500;
-  }
-  
-  .badge-primary {
-    background: #e3f2fd;
-    color: #1976d2;
-  }
-  
-  .meeting-link {
-    color: #666;
-  }
-  
-  .social-links {
-    display: flex;
-    gap: 12px;
-  }
-  
-  .social-link {
-    width: 32px;
-    height: 32px;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    transition: all 0.2s ease;
-  }
-  
-  .social-link.facebook {
-    background: #f0f2f5;
-    color: #1877f2;
-  }
-  
-  .social-link.pinterest {
-    background: #fdf2f8;
-    color: #e60023;
-  }
-  
-  .social-link.twitter {
-    background: #f0f9ff;
-    color: #1da1f2;
-  }
-  
-  .social-link.linkedin {
-    background: #f0f9ff;
-    color: #0077b5;
-  }
-  
-  .social-link.google {
-    background: #fef7f0;
-    color: #ea4335;
-  }
-  
-  .social-link:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  }
-  
+}
 
-  @media (max-width: 480px) {
-    .contact-detail-card {
-      padding: 16px;
-      margin: 8px;
-    }
-    
-    .contact-header {
-      flex-direction: column;
-      text-align: center;
-    }
-    
-    .action-buttons {
-      justify-content: center;
-    }
-    
-    .detail-row {
-      flex-direction: column;
-      gap: 8px;
-    }
-    
-    .detail-label {
-      min-width: auto;
-      font-weight: 600;
-    }
+.value-line--primary {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.value-text {
+  word-break: break-word;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 28px;
+  padding: 0;
+  margin-left: 12px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.tag--primary {
+  background: #F3F4F9;
+  color: #8083A3;
+}
+
+.meeting-link {
+  color: $purple;
+  text-decoration: none;
+  word-break: break-all;
+
+  &:hover {
+    text-decoration: underline;
   }
+}
+
+.social-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.social-pill {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #f1f3f5;
+  color: #8b9199;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 14px;
+  transition: background 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    background: #e8ebef;
+    color: #5c636a;
+  }
+}
+
+@media (max-width: 600px) {
+  .detail-root {
+    padding: 24px 20px 40px;
+  }
+
+  .detail-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .detail-header-copy {
+    padding-top: 0;
+    width: 100%;
+  }
+
+  .detail-actions {
+    justify-content: center;
+  }
+
+  .detail-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .detail-label {
+    flex-basis: auto;
+    padding-top: 0;
+  }
+}

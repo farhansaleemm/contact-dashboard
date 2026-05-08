@@ -1,93 +1,162 @@
-<div *ngIf="contact" class="contact-detail-card">
-
-  <div class="contact-header">
-    <img [src]="contact.avatar || '/assets/Unknown_person.jpg'" 
-         class="contact-avatar" 
-         width="80" 
-         height="80" />
-    <div class="contact-info">
-      <h3 class="contact-name">{{ contact.firstName }} {{ contact.lastName }}</h3>
-      <p class="contact-designation">{{ contact.designation || 'UI/UX Designer' }}</p>
-      
-    
-      <div class="action-buttons">
-        <button class="btn btn-primary btn-message">
-          <i class="fa fa-comment"></i> Message
-        </button>
-        <button class="btn btn-outline-secondary btn-call">
-          <i class="fa fa-phone"></i>
-        </button>
-   
-        <button class="btn btn-outline-secondary btn-more">
-          <i class="fa fa-ellipsis-h"></i>
-        </button>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="contact-details">
-    <!-- Bio Section -->
-    <div class="detail-row">
-      <label class="detail-label">Bio</label>
-      <div class="detail-value">
-        {{ contact.bio || 'When I first got into the advertising, I was looking for the magical combination that would put website into the top search engine rankings' }}
-      </div>
-    </div>
-
-
-    <div class="detail-row">
-      <label class="detail-label">Email</label>
-      <div class="detail-value">
-        <div *ngFor="let email of emails || []; let i = index" class="email-item">
-          <span class="email-address">{{ email }}</span>
-          <span *ngIf="i === 0" class="badge badge-primary">Primary</span>
+<div>
+  <div *ngIf="contact" class="detail-root">
+    <header class="detail-header">
+      <img
+        [src]="contact.avatar || '/assets/Unknown_person.jpg'"
+        class="detail-avatar"
+        width="114"
+        height="114"
+        alt=""
+      />
+      <div class="detail-header-copy">
+        <h2 class="detail-name">{{ contact.firstName }} {{ contact.lastName }}</h2>
+        <!-- <h2 class="detail-name">Johanna Stevens</h2> -->
+        <p class="detail-role">{{ contact.designation || 'UI/UX Designer' }}</p>
+        <div class="detail-actions">
+          <button type="button" class="btn-primary-lg">
+            <!-- <i class="fa fa-comment-o" aria-hidden="true"></i> -->
+            <svg width="18" height="18" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M11.25 7.48828C11.25 7.69922 11.168 7.875 11.0039 8.01562C10.8633 8.15625 10.6875 8.22656 10.4766 8.22656H2.98828L0 11.25V0.738281C0 0.527344 0.0703125 0.351562 0.210938 0.210938C0.351562 0.0703125 0.527344 0 0.738281 0H10.4766C10.6875 0 10.8633 0.0703125 11.0039 0.210938C11.168 0.351562 11.25 0.527344 11.25 0.738281V7.48828ZM14.2383 2.98828C14.4492 2.98828 14.625 3.05859 14.7656 3.19922C14.9062 3.33984 14.9766 3.51562 14.9766 3.72656V14.9766L11.9883 11.9883H3.72656C3.51562 11.9883 3.33984 11.918 3.19922 11.7773C3.05859 11.6367 2.98828 11.4609 2.98828 11.25V9.73828H12.7266V2.98828H14.2383Z" fill="#FAFBFF"/>
+              </svg>
+              
+            Message
+          </button>
+          <button type="button" class="btn-icon-sq" aria-label="Phone">
+            <!-- <i class="fa fa-phone"></i> -->
+            <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0.5" y="0.5" width="41" height="41" rx="9.5" fill="white" stroke="#ECEEF5"/>
+              <path d="M27.0117 23.5312C27.2227 23.5312 27.3984 23.6016 27.5391 23.7422C27.6797 23.8828 27.75 24.0586 27.75 24.2695V26.8711C27.75 27.457 27.5039 27.75 27.0117 27.75C23.5195 27.75 20.5195 26.4961 18.0117 23.9883C15.5039 21.4805 14.25 18.4805 14.25 14.9883C14.25 14.4961 14.543 14.25 15.1289 14.25H17.7305C17.9414 14.25 18.1172 14.3203 18.2578 14.4609C18.3984 14.6016 18.4688 14.7773 18.4688 14.9883C18.4688 15.9023 18.6094 16.7812 18.8906 17.625C18.9844 17.9297 18.9258 18.1875 18.7148 18.3984L17.2734 19.6641C18.3516 21.9141 20.0742 23.6133 22.4414 24.7617L23.6016 23.2852C23.7422 23.1445 23.918 23.0742 24.1289 23.0742C24.2461 23.0742 24.3281 23.0859 24.375 23.1094C25.2188 23.3906 26.0977 23.5312 27.0117 23.5312Z" fill="#8083A3"/>
+              </svg>
+              
+          </button>
+          <button type="button" class="btn-icon-sq" aria-label="Video call">
+            <!-- <i class="fa fa-video-camera"></i> -->
+            <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0.5" y="0.5" width="41" height="41" rx="9.5" fill="white" stroke="#ECEEF5"/>
+              <path d="M21 19.4883L23.9883 22.5117H21.7383V27.0117H20.2617V22.5117H18.0117L21 19.4883ZM26.2383 14.9883C26.6602 14.9883 27.0117 15.1406 27.293 15.4453C27.5977 15.7266 27.75 16.0781 27.75 16.5V25.5C27.75 25.8984 27.5977 26.25 27.293 26.5547C26.9883 26.8594 26.6367 27.0117 26.2383 27.0117H23.25V25.5H26.2383V18.0117H15.7617V25.5H18.75V27.0117H15.7617C15.3398 27.0117 14.9766 26.8711 14.6719 26.5898C14.3906 26.2852 14.25 25.9219 14.25 25.5V16.5C14.25 16.0781 14.3906 15.7266 14.6719 15.4453C14.9766 15.1406 15.3398 14.9883 15.7617 14.9883H26.2383Z" fill="#8083A3"/>
+              </svg>
+              
+          </button>
+          <button type="button" class="btn-icon-sq" aria-label="More">
+            <!-- <i class="fa fa-ellipsis-h"></i> -->
+            <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0.5" y="0.5" width="41" height="41" rx="9.5" fill="white" stroke="#ECEEF5"/>
+              <path d="M19.9453 19.9453C20.25 19.6406 20.6016 19.4883 21 19.4883C21.3984 19.4883 21.75 19.6406 22.0547 19.9453C22.3594 20.25 22.5117 20.6016 22.5117 21C22.5117 21.3984 22.3594 21.75 22.0547 22.0547C21.75 22.3594 21.3984 22.5117 21 22.5117C20.6016 22.5117 20.25 22.3594 19.9453 22.0547C19.6406 21.75 19.4883 21.3984 19.4883 21C19.4883 20.6016 19.6406 20.25 19.9453 19.9453ZM24.4453 19.9453C24.75 19.6406 25.1016 19.4883 25.5 19.4883C25.8984 19.4883 26.25 19.6406 26.5547 19.9453C26.8594 20.25 27.0117 20.6016 27.0117 21C27.0117 21.3984 26.8594 21.75 26.5547 22.0547C26.25 22.3594 25.8984 22.5117 25.5 22.5117C25.1016 22.5117 24.75 22.3594 24.4453 22.0547C24.1406 21.75 23.9883 21.3984 23.9883 21C23.9883 20.6016 24.1406 20.25 24.4453 19.9453ZM15.4453 19.9453C15.75 19.6406 16.1016 19.4883 16.5 19.4883C16.8984 19.4883 17.25 19.6406 17.5547 19.9453C17.8594 20.25 18.0117 20.6016 18.0117 21C18.0117 21.3984 17.8594 21.75 17.5547 22.0547C17.25 22.3594 16.8984 22.5117 16.5 22.5117C16.1016 22.5117 15.75 22.3594 15.4453 22.0547C15.1406 21.75 14.9883 21.3984 14.9883 21C14.9883 20.6016 15.1406 20.25 15.4453 19.9453Z" fill="#8083A3"/>
+              </svg>
+              
+          </button>
         </div>
       </div>
-    </div>
-
+    </header>
   
-    <div class="detail-row">
-      <label class="detail-label">Dial</label>
-      <div class="detail-value">
-        <div class="dial-item">
-          {{ contact.dial || 'j.stevens@ymsg.com' }}
-        </div>
+    <dl class="detail-grid">
+      <div class="detail-row">
+        <dt class="detail-label">Bio</dt>
+        <dd class="detail-value detail-value--multiline">
+          {{
+            contact.bio ||
+              'When I first got into the advertising, I was looking for the magical combination that would put website into the top search engine rankings'
+          }}
+        </dd>
       </div>
-    </div>
-
- 
-    <div class="detail-row">
-      <label class="detail-label">Meeting</label>
-      <div class="detail-value">
-        <div class="meeting-link">
-          {{ contact.meetingLink || 'http://go.betacall.com/meet/j.stevens' }}
-        </div>
+  
+      <div class="detail-row">
+        <dt class="detail-label">Email</dt>
+        <dd class="detail-value">
+          <div
+            *ngFor="let email of emails || []; let i = index"
+            class="value-line"
+            [class.value-line--primary]="i === 0"
+          >
+            <span class="value-text">{{ email }}</span>
+            <span *ngIf="i === 0" class="tag tag--primary">Primary</span>
+          </div>
+        </dd>
       </div>
-    </div>
-
-   
-    <div class="detail-row">
-      <label class="detail-label">Phone</label>
-      <div class="detail-value">
-        <div *ngFor="let phone of contact.phone || []; let i = index" class="phone-item">
-          <span class="phone-number">{{ phone }}</span>
-          <span *ngIf="i === 0" class="badge badge-primary">Primary</span>
-        </div>
+  
+      <div class="detail-row">
+        <dt class="detail-label">Dial</dt>
+        <dd class="detail-value">
+          <span class="value-text">{{ contact.dial || 'j.stevens@ymsg.com' }}</span>
+        </dd>
       </div>
-    </div>
-
-
-    <div class="detail-row">
-      <label class="detail-label">Social</label>
-      <div class="detail-value">
-        <div class="social-links">
-          <a href="#" class="social-link facebook"><i class="fa fa-facebook-f"></i></a>
-          <a href="#" class="social-link pinterest"><i class="fa fa-pinterest"></i></a>
-          <a href="#" class="social-link twitter"><i class="fa fa-twitter"></i></a>
-          <a href="#" class="social-link google"><i class="fa fa-google"></i></a>
-        </div>
+  
+      <div class="detail-row">
+        <dt class="detail-label">Meeting</dt>
+        <dd class="detail-value">
+          <a
+            class="meeting-link"
+            [href]="meetingUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {{ contact.meetingLink || 'http://go.betacall.com/meet/j.stevens' }}
+          </a>
+        </dd>
       </div>
-    </div>
+  
+      <div class="detail-row">
+        <dt class="detail-label">Phone</dt>
+        <dd class="detail-value">
+          <div
+            *ngFor="let phone of contact.phone || []; let i = index"
+            class="value-line"
+            [class.value-line--primary]="i === 0"
+          >
+            <span class="value-text">{{ phone }}</span>
+            <span *ngIf="i === 0" class="tag tag--primary">Primary</span>
+          </div>
+        </dd>
+      </div>
+  
+      <div class="detail-row">
+        <dt class="detail-label">Social</dt>
+        <dd class="detail-value">
+          <div class="social-row">
+            <a href="#" class="social-pill" aria-label="Facebook">
+              <!-- <i class="fa fa-facebook"></i> -->
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="0.5" y="0.5" width="39" height="39" rx="9.5" fill="white" stroke="#ECEEF5"/>
+                <path d="M18.4062 28V20.8437H16V18H18.4062V15.75C18.4062 14.5625 18.7396 13.6406 19.4062 12.9844C20.0729 12.3281 20.9583 12 22.0625 12C22.9583 12 23.6875 12.0417 24.25 12.125V14.6562H22.75C22.1875 14.6562 21.8021 14.7812 21.5937 15.0312C21.4271 15.2396 21.3437 15.5729 21.3437 16.0312V18H24L23.625 20.8437H21.3437V28H18.4062Z" fill="#8083A3"/>
+                </svg>
+                
+            </a>
+            <a href="#" class="social-pill" aria-label="Pinterest">
+              <!-- <i class="fa fa-pinterest-p"></i> -->
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="0.5" y="0.5" width="39" height="39" rx="9.5" fill="white" stroke="#ECEEF5"/>
+                <path d="M20.375 12C21.3541 12.0208 22.276 12.2448 23.1406 12.6719C24.0052 13.099 24.6875 13.6875 25.1875 14.4375C25.7291 15.25 26 16.1614 26 17.1719C26 18.1823 25.8333 19.1354 25.5 20.0312C25.125 21.0104 24.5937 21.7812 23.9062 22.3437C23.1354 22.9687 22.2291 23.2812 21.1875 23.2812C20.7708 23.2812 20.3542 23.1823 19.9375 22.9843C19.5208 22.7864 19.2187 22.5104 19.0312 22.1562L18.7812 23.1562C18.5104 24.2396 18.2917 24.9896 18.125 25.4062C17.875 25.9687 17.4271 26.6875 16.7812 27.5625L16.6562 27.625L16.5625 27.5312L16.5312 27.0625C16.4687 26.4791 16.4375 26.0416 16.4375 25.75C16.4375 25.125 16.5417 24.3125 16.75 23.3125C16.875 22.7291 17.0833 21.8646 17.375 20.7187L17.75 19.2187C17.5417 18.8229 17.4375 18.3021 17.4375 17.6562C17.4375 17.0521 17.5937 16.5521 17.9062 16.1562C18.1771 15.8229 18.5104 15.6146 18.9062 15.5312C19.3021 15.4479 19.6458 15.5208 19.9375 15.75C20.2292 15.9792 20.375 16.3437 20.375 16.8437C20.375 17.1146 20.3333 17.4167 20.25 17.75C20.2083 17.9375 20.1146 18.2292 19.9687 18.625C19.8229 19.0208 19.7292 19.3125 19.6875 19.5C19.6042 19.8333 19.5625 20.125 19.5625 20.375C19.5625 20.7708 19.7031 21.0989 19.9844 21.3594C20.2656 21.6198 20.6042 21.75 21 21.75C21.6666 21.75 22.2291 21.4583 22.6875 20.875C23.0833 20.3958 23.375 19.75 23.5625 18.9375C23.7291 18.2708 23.8125 17.6146 23.8125 16.9687C23.8125 15.8854 23.4739 15.0417 22.7969 14.4375C22.1198 13.8333 21.2291 13.5312 20.125 13.5312C19.3125 13.5312 18.5677 13.7187 17.8906 14.0937C17.2135 14.4687 16.6875 14.9792 16.3125 15.625C15.9375 16.2708 15.75 17.0104 15.75 17.8437C15.75 18.1979 15.8125 18.5417 15.9375 18.875C16 19.0625 16.1146 19.2916 16.2812 19.5625C16.4062 19.7708 16.4687 19.9062 16.4687 19.9687C16.4687 20.1354 16.4271 20.3437 16.3437 20.5937C16.2396 20.9062 16.125 21.0625 16 21.0625C15.7292 21.0625 15.4375 20.9219 15.125 20.6406C14.8125 20.3594 14.5521 19.9791 14.3437 19.5C14.1146 18.9375 14 18.3125 14 17.625C14 16.5 14.3125 15.5 14.9375 14.625C15.5208 13.8125 16.3021 13.1719 17.2812 12.7031C18.2604 12.2344 19.2917 12 20.375 12Z" fill="#8083A3"/>
+                </svg>
+                
+            </a>
+            <a href="#" class="social-pill" aria-label="Twitter">
+              <!-- <i class="fa fa-twitter"></i> -->
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="0.5" y="0.5" width="39" height="39" rx="9.5" fill="white" stroke="#ECEEF5"/>
+                <path d="M26.3437 17.25C26.3645 17.3333 26.375 17.4687 26.375 17.6562C26.375 19.1562 26.0104 20.6042 25.2812 22C24.5312 23.4791 23.4791 24.6562 22.125 25.5312C20.6458 26.5104 18.9479 27 17.0312 27C15.1979 27 13.5208 26.5104 12 25.5312C12.2292 25.5521 12.4896 25.5625 12.7812 25.5625C14.3021 25.5625 15.6667 25.0937 16.875 24.1562C16.1458 24.1562 15.5052 23.9427 14.9531 23.5156C14.401 23.0885 14.0208 22.5521 13.8125 21.9062C14.0208 21.9271 14.2187 21.9375 14.4062 21.9375C14.6979 21.9375 14.9896 21.9062 15.2812 21.8437C14.5312 21.6771 13.9062 21.2916 13.4062 20.6875C12.9062 20.0833 12.6562 19.3958 12.6562 18.625V18.5625C13.1146 18.8333 13.6042 18.9792 14.125 19C13.6875 18.6875 13.3333 18.2917 13.0625 17.8125C12.7917 17.3333 12.6562 16.8073 12.6562 16.2344C12.6562 15.6615 12.8125 15.1146 13.125 14.5937C13.9375 15.6146 14.9323 16.4271 16.1094 17.0312C17.2864 17.6354 18.5417 17.9687 19.875 18.0312C19.8333 17.7812 19.8125 17.5312 19.8125 17.2812C19.8125 16.6979 19.9583 16.151 20.25 15.6406C20.5416 15.1302 20.9375 14.7292 21.4375 14.4375C21.9375 14.1458 22.4791 14 23.0625 14C23.5416 14 23.9843 14.0937 24.3906 14.2812C24.7968 14.4687 25.1562 14.7187 25.4687 15.0312C26.2187 14.8854 26.9166 14.625 27.5625 14.25C27.3125 15.0208 26.8333 15.625 26.125 16.0625C26.75 15.9792 27.375 15.8021 28 15.5312C27.5416 16.1979 26.9895 16.7708 26.3437 17.25Z" fill="#8083A3"/>
+                </svg>
+                
+            </a>
+            <a href="#" class="social-pill" aria-label="LinkedIn">
+              <!-- <i class="fa fa-linkedin"></i> -->
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="0.5" y="0.5" width="39" height="39" rx="9.5" fill="white" stroke="#ECEEF5"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M14.6875 16.375C14.2292 16.375 13.8333 16.2083 13.5 15.875C13.1667 15.5417 13 15.1458 13 14.6875C13 14.2292 13.1667 13.8333 13.5 13.5C13.8333 13.1667 14.2292 13 14.6875 13C15.1458 13 15.5417 13.1667 15.875 13.5C16.2083 13.8333 16.375 14.2292 16.375 14.6875C16.375 15.1458 16.2083 15.5417 15.875 15.875C15.5417 16.2083 15.1458 16.375 14.6875 16.375ZM16.125 27H13.2187V17.6562H16.125V27ZM24.0937 27H27V21.875C27 20.4375 26.7916 19.375 26.375 18.6875C25.8333 17.8333 24.8854 17.4062 23.5312 17.4062C22.8646 17.4062 22.2812 17.5729 21.7812 17.9062C21.3229 18.1771 20.9896 18.5208 20.7812 18.9375H20.75V17.6562H17.9687V27H20.8437V22.375C20.8437 21.6458 20.9479 21.0937 21.1562 20.7187C21.4271 20.2187 21.8958 19.9687 22.5625 19.9687C23.2291 19.9687 23.6771 20.25 23.9062 20.8125C24.0312 21.1458 24.0937 21.6875 24.0937 22.4375V27Z" fill="#8083A3"/>
+                </svg>
+                
+            </a>
+            <a href="#" class="social-pill" aria-label="Google">
+              <!-- <i class="fa fa-google"></i> -->
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="0.5" y="0.5" width="39" height="39" rx="9.5" fill="white" stroke="#ECEEF5"/>
+                <path d="M20 26.75C21.2639 26.75 22.4387 26.434 23.5243 25.8021C24.5938 25.1863 25.4363 24.3438 26.0521 23.2743C26.684 22.1887 27 21.0139 27 19.75C27 19.2801 26.9514 18.8102 26.8542 18.3403L26.8299 18.1944H20V20.5278H24.6667C24.537 21.2569 24.2494 21.9172 23.8038 22.5087C23.3582 23.1001 22.8032 23.566 22.1389 23.9062C21.4745 24.2465 20.7616 24.4167 20 24.4167C19.1574 24.4167 18.3796 24.206 17.6667 23.7847C16.9537 23.3634 16.3866 22.7963 15.9653 22.0833C15.544 21.3704 15.3333 20.5926 15.3333 19.75C15.3333 18.9074 15.544 18.1296 15.9653 17.4167C16.3866 16.7037 16.9537 16.1366 17.6667 15.7153C18.3796 15.294 19.1574 15.0833 20 15.0833C20.5671 15.0833 21.114 15.1846 21.6406 15.3872C22.1672 15.5897 22.6331 15.8692 23.0382 16.2257L24.7153 14.5729C24.0833 14.0058 23.3623 13.5602 22.5521 13.2361C21.7419 12.912 20.8912 12.75 20 12.75C18.7361 12.75 17.5613 13.066 16.4757 13.6979C15.4062 14.3137 14.5637 15.1562 13.9479 16.2257C13.316 17.3113 13 18.4861 13 19.75C13 21.0139 13.316 22.1887 13.9479 23.2743C14.5637 24.3438 15.4062 25.1863 16.4757 25.8021C17.5613 26.434 18.7361 26.75 20 26.75Z" fill="#8083A3"/>
+                </svg>
+                
+            </a>
+          </div>
+        </dd>
+      </div>
+    </dl>
   </div>
+  
 </div>
